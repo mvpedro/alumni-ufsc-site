@@ -1,13 +1,26 @@
-import '@/styles/globals.css'
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
+import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import Navbar from '../components/Navbar'
+import { useRouter } from 'next/router'
+import { SessionProvider } from 'next-auth/react'
+import { Roboto } from '@next/font/google'
+const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
-function App({ Component, pageProps }: AppProps<{ session: Session; }>) {
+export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+  const { pathname } = router
+  let showNavbar = true
+
+  if (pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password') {
+    showNavbar = false
+  }
+
   return (
     <SessionProvider session={pageProps.session}>
-      <Component {...pageProps} />
+      <main className={roboto.className}>
+        {showNavbar && <Navbar />}
+        <Component {...pageProps} />
+      </main>
     </SessionProvider>
-  );
+  )
 }
-export default App;

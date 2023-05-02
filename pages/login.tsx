@@ -1,28 +1,10 @@
 import React from 'react'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import LoginForm from '../components/Form/LoginForm'
 
 const login = () => {
-    const { data: session } = useSession()
-
-    if (session) {
-        return (
-            <div>
-                {session && session.user ?
-                    <p>Hello ${session.user.name}</p>
-                    :
-                    <p></p>}
-                <button onClick={() => signOut()}>Sign Out</button>
-            </div>
-        )
-    }
-    else {
-        return (
-            <div>
-                <p>You are not signed in.</p>
-                <button onClick={() => signIn()}>Sign In</button>
-            </div>
-        )
-    }
+    return (
+        <LoginForm />
+    )
 }
 
-export default login;
+export default login
